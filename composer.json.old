@@ -1,0 +1,19 @@
+{  
+	"name": "ranchero/apitest",  
+	"description": "Nacho, nacho man. I want to be a nacho man",  
+	"license": "MIT",  
+	"keywords": ["testpsr4"],  
+	"authors": [  
+		{  
+			"name": "Nucleo",  
+			"email": "nucleo.ar@telefonica.com"  
+		}  
+	],  
+	"require": {},  
+	"autoload": {  
+		"psr-4": {  
+			"Ranchero\\Testpsr4\\": "src",
+			"App\\": "src"
+		}  
+	}	  
+}  
