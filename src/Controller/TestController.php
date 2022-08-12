@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 class TestController extends BaseController{
-/*
-        function __call($name,$argument){
-                return "Llamando al método de objeto '$name' ". implode(', ', $a
-rguments). "\n";
-        }
-*/
+
         public function __construct()
 	{
                 $this->test = new \App\Model\TestModel();
@@ -25,7 +20,7 @@ rguments). "\n";
                                 $this->jobstatus();
                                 return;
                         }
-		if(!$rslt=$this->test->getById($uri[1])){
+		if(is_int($uri[1]) or !$rslt=$this->test->getById($uri[1])){
 			$this->send404('no encotrado');
 			return;
 		}

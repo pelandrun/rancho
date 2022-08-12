@@ -3,7 +3,17 @@ namespace App\Controller;
 
 class BaseController
 {
+
+    public ?array $response = [
+        "code" => "404",
+        "success" => false,
+        "message" => null,
+        "result_len" => 0,
+        "result" => []
+    ];
+
     function __construct() {
+        // var_dump($this->response);
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         switch($requestMethod){
                 case 'GET':
@@ -12,6 +22,7 @@ class BaseController
                         $this->create();
         }
     }
+
     /**
      * __call magic method.
      */
@@ -27,7 +38,7 @@ class BaseController
      */
     protected function getUriSegments()
     {
-        $relative_path=preg_replace('/index.php$/','',$_SERVER['SCRIPT_NAME']);
+        $relative_path=preg_replace(URI_FILTER,'',$_SERVER['SCRIPT_NAME']);
         $uri=str_replace($relative_path,'',$_SERVER['REQUEST_URI']);
         // $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = explode( '/', $uri );
@@ -56,7 +67,7 @@ class BaseController
     protected function send404($msg){
         $rd=[
             'code'=>404,
-            'mesage'=>$msg,
+            'message'=>$msg,
         ];
         $this->sendOutput(
             json_encode($rd),
@@ -73,13 +84,14 @@ class BaseController
     *result_legt int
     *results array
     */
-    protected function sendResults($data){
-        $header=[
-            'Content-Type: application/json',
-            'HTTP/1.1 '.$data['code'].' OK',
-        ];
-        $this->sendOutput(json_encode($data),$header);
-    }
+
+    // protected function sendResults($data){
+    //     $header=[
+    //         'Content-Type: application/json',
+    //         'HTTP/1.1 '.$data['code'].' OK',
+    //     ];
+    //     $this->sendOutput(json_encode($data),$header);
+    // }
     protected function sendOutput($data, $httpHeaders=array())
     {
         header_remove('Set-Cookie');

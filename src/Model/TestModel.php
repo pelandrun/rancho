@@ -6,13 +6,13 @@ class TestModel
 {
 	function __construct(){
 		$this->test=[
-			"Test 1",
-			"Test 2"
+			["nombre" => "Test 1"],
+			["nombre" => "Test 2"]
 		];
-	}
 
+	}
 	function getById($id){
-		return $this->test[$id];
+		return $this->test["$id"];
 	}
 }
 	
