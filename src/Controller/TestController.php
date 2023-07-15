@@ -11,8 +11,8 @@ class TestController extends BaseController{
 
         function read(){
                 $uri=$this->getUriSegments();
-                if($acction=$uri[2]) // 2 = acction
-                        switch($uri[2]){
+                if($acction=$uri[0]) // 2 = acction
+                        switch($uri[1]){
                                 case 'update':
                                 $this->getupdate();
                                 return;
