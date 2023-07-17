@@ -17,13 +17,17 @@ class BaseController
 
     function __construct()
     {
+        $this->psr17Factory = new Psr17Factory();
+        $this->responseBody = $this->psr17Factory->createStream();
         // var_dump($this->response);
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         switch ($requestMethod) {
             case 'GET':
                 $this->read();
+                break;
             case 'POST':
                 $this->create();
+                break;
         }
     }
 
@@ -32,10 +36,7 @@ class BaseController
      */
     public function __call($name, $arguments)
     {
-        $psr17Factory = new Psr17Factory();
-        $responseBody = $psr17Factory->createStream();
-
-        $response = $psr17Factory->createResponse(404)->withBody($responseBody);
+        $response = $this->psr17Factory->createResponse(404)->withBody($this->responseBody);
         $this->emit($response);
         $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
     }
