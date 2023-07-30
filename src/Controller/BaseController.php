@@ -6,7 +6,8 @@ use \Nyholm\Psr7\Factory\Psr17Factory;
 
 class BaseController
 {
-
+    private $psr17Factory;
+    private $responseBody;
     public ?array $response = [
         "code" => "404",
         "success" => false,
@@ -38,7 +39,6 @@ class BaseController
     {
         $response = $this->psr17Factory->createResponse(404)->withBody($this->responseBody);
         $this->emit($response);
-        $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
     }
 
     /**
